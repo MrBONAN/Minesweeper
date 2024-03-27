@@ -22,20 +22,22 @@ class Field{
             let j = 0;
             while (j < 16){
                 let line[j] = Cell.new(i, j);
+                let j = j + 1;
             }
+            let i = i + 1;
         }
 		return;
 	}
 
     method void MoveAlongX(int change) // change = 1 - сдвиг вправо, change = -1 - сдвиг влево
     {
-        if (_curX > 0 & _curX < 15) { do SelectCell(change, 0); } // 0 - изменение по оси X
+        if ((_curX > -1) & (_curX < 15)) { do SelectCell(change, 0); } // 0 - изменение по оси X
         return;
     }
 
     method void MoveAlongY(int change) // change = 1 - сдвиг вверх, change = -1 - сдвиг вниз
     {
-        if (_curY > 0 & _curY < 15) { do SelectCell(change, 1); } // 1 - изменение по оси Y
+        if ((_curY > -1) & (_curY < 15)) { do SelectCell(change, 1); } // 1 - изменение по оси Y
         return;
     }
 
@@ -85,7 +87,9 @@ class Field{
             while (j < 16){
                 let cell = line[j];
                 do cell.Draw();
+                let j = j + 1;
             }
+            let i = i + 1;
         }
         return;
     }

@@ -1,47 +1,30 @@
 class Main {
     function void main () {
-        var Cell cell, cell2;
-        var int i;
-        var boolean openResult;
+        var Field gameField;
+        var boolean exit;
+        var char key;
+        let exit = false;
+        let gameField = Field.new();
+        do gameField.Draw();
 
-        let cell = Cell.new(0, 1);
-        do cell.SetState(12);
-        do cell.ChangeFlagState();
-        do Sys.wait(1000);
-        do cell.ChangeFlagState();
-        do Sys.wait(1000);
-        let openResult = cell.Open();
-        if (openResult) {
-            do Output.printString("No mine");
-        } else {
-            do Output.printString("Oops");
-        }
+        while (~exit) {
+                    while (key = 0) {
+                        let key = Keyboard.keyPressed();
+                    }
+                    if ((129 < key) & (key < 134) | (key = 92) | (key = 128)) {
+                        if (key = 131) { do gameField.MoveAlongY(-1); }   // up arrow
+                        if (key = 133) { do gameField.MoveAlongY(1); }    // down arrow
+                        if (key = 130) { do gameField.MoveAlongX(-1); }   // left arrow
+                        if (key = 132) { do gameField.MoveAlongX(1); }   // right arrow
+                        if (key = 128) { do gameField.CheckCell(); }
+                        if (key = 92) { do gameField.SetOrInstallFlag(); }
+                    }
 
-        let cell2 = Cell.new(1, 1);
-        do cell2.SetState(6);
-        do cell2.Select();
-        do Sys.wait(1500);
-        do cell2.ChangeFlagState();
-        do Sys.wait(1000);
-        do cell2.ChangeFlagState();
-        do Sys.wait(1000);
-        let openResult = cell2.Open();
-        if (openResult) {
-            do Output.printString("No mine");
-        } else {
-            do Output.printString("Oops");
-        }
-        
-        // let i = 0;
-        // while (i < 13) {
-        //     do cell.SetState(i);
-        //     do cell.Draw();
-        //     do Sys.wait(500);
-        //     let i = i + 1;
-        // }
-        // var Field gameField;
-        // let gameField = Field.new();
-        // do gameField.Draw();
+                    while (~(key = 0)) {
+                        let key = Keyboard.keyPressed();
+                    }
+                } // while
+
         return;
     }
 }
