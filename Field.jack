@@ -27,50 +27,48 @@ class Field{
 		return;
 	}
 
-    method void MoveAlong(int key)
+    method void MoveAlongX(int change) // change = 1 - сдвиг вправо, change = -1 - сдвиг влево
     {
-        var Array line;
-        if (key = 131 & _curY < 15) { 
-            do SelectCell(_curY, 1);
-        }
-        if (key = 133 & _curY > 0) {
-            do SelectCell(_curY, -1);
-        }
-        if (key = 132 & _curX < 15) {
-            do SelectCell(_curX, 1);
-        }
-        if (key = 130 & _curX > 0) {
-            do SelectCell(_curX, -1);
-        }
+        if (_curX > 0 & _curX < 15) { do SelectCell(change, 0); } // 0 - изменение по оси X
         return;
     }
 
-    method void SelectCell(int position, int change)
+    method void MoveAlongY(int change) // change = 1 - сдвиг вверх, change = -1 - сдвиг вниз
+    {
+        if (_curY > 0 & _curY < 15) { do SelectCell(change, 1); } // 1 - изменение по оси Y
+        return;
+    }
+
+    method void SelectCell(int change, int coordinate)
     {
         var Array line;
         var Cell cell;
         let line = _gameField[_curX];
         let cell = line[_curY];
-        do cell.SetState(11);
-        do cell.Draw();
-        do cell.SetShow(false);
-        let position = position + change;
+        do cell.CancelSelection();
+        if (coordinate = 0) { let _curX = _curX + change; }
+        else { let _curY = _curY + change; }
         let line = _gameField[_curX];
         let cell = line[_curY];
-        do cell.SetShow(true);
-        do cell.SetState(10);
-        do cell.Draw();
+        do cell.Select();
         return;
     }
 
-    method void CheckCell(int state){
+    method void CheckCell(){
         var Cell cell;
         var Array line;
         let line = _gameField[_curX]; 
         let cell = line[_curY];
-        do cell.SetShow(true);
-        do cell.SetState(state);  
-        do cell.Draw();
+        do cell.Open();
+        return;
+    }
+
+    method void SetOrInstallFlag(){
+        var Cell cell;
+        var Array line;
+        let line = _gameField[_curX]; 
+        let cell = line[_curY];
+        do cell.ChangeFlagState();
         return;
     }
 
