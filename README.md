@@ -1,0 +1,2 @@
+# Minesweeper
+Игра на Jack
