@@ -1,0 +1,94 @@
+class Field{
+
+    field int _curX, _curY;
+    field Array _gameField;
+
+    constructor Field new() {
+        let _curX = 0;
+		let _curY = 0;
+        do GenerateField();
+		return this;
+	}
+
+    method void GenerateField() {
+        var int i;
+        var int j;
+        var Array line;
+        let _gameField = Array.new(16);
+        let i = 0;
+        while (i < 16) {
+            let _gameField[i] = Array.new(16);
+            let line = _gameField[i];
+            let j = 0;
+            while (j < 16){
+                let line[j] = Cell.new(i, j);
+            }
+        }
+		return;
+	}
+
+    method void MoveAlong(int key)
+    {
+        var Array line;
+        if (key = 131 & _curY < 15) { 
+            do SelectCell(_curY, 1);
+        }
+        if (key = 133 & _curY > 0) {
+            do SelectCell(_curY, -1);
+        }
+        if (key = 132 & _curX < 15) {
+            do SelectCell(_curX, 1);
+        }
+        if (key = 130 & _curX > 0) {
+            do SelectCell(_curX, -1);
+        }
+        return;
+    }
+
+    method void SelectCell(int position, int change)
+    {
+        var Array line;
+        var Cell cell;
+        let line = _gameField[_curX];
+        let cell = line[_curY];
+        do cell.SetState(11);
+        do cell.Draw();
+        do cell.SetShow(false);
+        let position = position + change;
+        let line = _gameField[_curX];
+        let cell = line[_curY];
+        do cell.SetShow(true);
+        do cell.SetState(10);
+        do cell.Draw();
+        return;
+    }
+
+    method void CheckCell(int state){
+        var Cell cell;
+        var Array line;
+        let line = _gameField[_curX]; 
+        let cell = line[_curY];
+        do cell.SetShow(true);
+        do cell.SetState(state);  
+        do cell.Draw();
+        return;
+    }
+
+    method void Draw()
+    {
+        var int i;
+        var int j;
+        var Array line;
+        var Cell cell;
+        let i = 0;
+        while (i < 16) {
+            let line = _gameField[i];
+            let j = 0;
+            while (j < 16){
+                let cell = line[j];
+                do cell.Draw();
+            }
+        }
+        return;
+    }
+}

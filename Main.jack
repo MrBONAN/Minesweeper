@@ -1,0 +1,21 @@
+class Main {
+    function void main () {
+        // var Cell cell;
+        // var int i;
+
+        // let cell = Cell.new(0, 0);
+        // do cell.SetShow(true);
+        
+        // let i = 0;
+        // while (i < 13) {
+        //     do cell.SetState(i);
+        //     do cell.Draw();
+        //     do Sys.wait(500);
+        //     let i = i + 1;
+        // }
+        var Field gameField;
+        let gameField = Field.new();
+        do gameField.Draw();
+        return;
+    }
+}
