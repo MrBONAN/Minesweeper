@@ -1,10 +1,36 @@
 class Main {
     function void main () {
-        // var Cell cell;
-        // var int i;
+        var Cell cell, cell2;
+        var int i;
+        var boolean openResult;
 
-        // let cell = Cell.new(0, 0);
-        // do cell.SetShow(true);
+        let cell = Cell.new(0, 1);
+        do cell.SetState(12);
+        do cell.ChangeFlagState();
+        do Sys.wait(1000);
+        do cell.ChangeFlagState();
+        do Sys.wait(1000);
+        let openResult = cell.Open();
+        if (openResult) {
+            do Output.printString("No mine");
+        } else {
+            do Output.printString("Oops");
+        }
+
+        let cell2 = Cell.new(1, 1);
+        do cell2.SetState(6);
+        do cell2.Select();
+        do Sys.wait(1500);
+        do cell2.ChangeFlagState();
+        do Sys.wait(1000);
+        do cell2.ChangeFlagState();
+        do Sys.wait(1000);
+        let openResult = cell2.Open();
+        if (openResult) {
+            do Output.printString("No mine");
+        } else {
+            do Output.printString("Oops");
+        }
         
         // let i = 0;
         // while (i < 13) {
@@ -13,9 +39,9 @@ class Main {
         //     do Sys.wait(500);
         //     let i = i + 1;
         // }
-        var Field gameField;
-        let gameField = Field.new();
-        do gameField.Draw();
+        // var Field gameField;
+        // let gameField = Field.new();
+        // do gameField.Draw();
         return;
     }
 }

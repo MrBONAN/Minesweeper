@@ -1,7 +1,8 @@
 class Cell {
 	field int _x, _y;
 	field int _state;
-	field booleand _show;
+	field boolean _show;
+	field boolean _flagState;
 	//  int startX, int startY не стал делать тут. Лучше при вызове new написать Cell.new(x + startX, y + startY)
 	constructor Cell new(int x, int y) { 
 		let _x = x;
@@ -24,13 +25,17 @@ class Cell {
 		return _state;
 	}
 
-	method void SetShow(booleand show) {
+	method void SetShow(boolean show) {
 		let _show = show;
 		return;
 	}
 
 	// 0 - пустая, 1..8 - с цифрами, 10 - выбранная, 11 - закрытая, 12 - мина
 	method void Draw() {
+		if (_flagState) {
+			do DrawFlag();
+			return;
+		}
 		if (~_show) {
 			do DrawEmpty();
 			return;
@@ -83,6 +88,41 @@ class Cell {
 		if (_state = 12) { // mine
 			do DrawMine();
 			return;
+		}
+		return;
+	}
+
+	method void Select() {
+		do DrawSelected();
+		return;
+	}
+
+	method void CancelSelection() {
+		do Draw();
+		return;
+	}
+
+	method boolean Open() { // если клетка была с миной, то false
+		if (_flagState) {
+			return true;
+		}
+		let _show = true;
+		do Draw();
+		if (_state = 12) { // если мина
+			return false;
+		}
+		return true;
+	}
+
+	method void ChangeFlagState() {
+		if (_show) {
+			return; // уже открыта
+		}
+		let _flagState = ~_flagState;
+		if (_flagState) {
+			do DrawFlag();
+		} else {
+			do DrawEmpty();
 		}
 		return;
 	}
