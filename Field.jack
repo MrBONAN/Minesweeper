@@ -2,10 +2,12 @@ class Field{
 
     field int _curX, _curY;
     field Array _gameField;
+    field int numberOfOpenCells;
 
     constructor Field new() {
         let _curX = 0;
 		let _curY = 0;
+        let numberOfOpenCells = 0;
         do GenerateField();
 		return this;
 	}
@@ -72,13 +74,19 @@ class Field{
         return;
     }
 
-    method void CheckCell(){
+    method boolean CheckCell(){
         var Cell cell;
         var Array line;
+        var boolean result;
         let line = _gameField[_curX]; 
         let cell = line[_curY];
-        do cell.Open();
-        return;
+        let result = cell.Open();
+        let numberOfOpenCells = numberOfOpenCells + 1;
+        return result;
+    }
+
+    method int CheckNumberofOpenCells(){
+        return numberOfOpenCells;
     }
 
     method void SetOrInstallFlag(){

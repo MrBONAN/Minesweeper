@@ -1,0 +1,44 @@
+class Game{
+
+    constructor Game new() {
+		return this;
+	}
+
+    function void Run() {
+        var Field gameField;
+        var boolean exit;
+        var MessageBox messageBox;
+        var boolean winOrLose;
+        var char key;
+        let exit = false;
+        let gameField = Field.new();
+        let messageBox = MessageBox.new(1, 1, 10);
+        let winOrLose = false;
+        do gameField.Draw();
+
+        while (~exit) {
+            while (key = 0) { let key = Keyboard.keyPressed();}
+            if ((129 < key) & (key < 134) | (key = 92) | (key = 128)) {
+                if (key = 131) { do gameField.MoveAlongY(1); }   // up arrow
+                    if (key = 133) { do gameField.MoveAlongY(-1); }    // down arrow
+                    if (key = 130) { do gameField.MoveAlongX(1); }   // left arrow
+                    if (key = 132) { do gameField.MoveAlongX(-1); }   // right arrow
+                    if (key = 128) {
+                        let exit = gameField.CheckCell(); //false - если мина
+                        let exit = ~exit;
+                        if ((~exit) & (gameField.CheckNumberofOpenCells() = 256)) { 
+                            let winOrLose = true;
+                            let exit = true;
+                        }
+                    }
+                    if (key = 92) { do gameField.SetOrInstallFlag(); }
+                }
+        }
+
+        if (winOrLose) { do messageBox.DrawWin(10); }
+        else { do messageBox.DrawLose(10); }
+        return;
+    }
+}
+    
+    
