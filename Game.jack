@@ -71,8 +71,54 @@ class Game{
 
     method void InitializeField(int mineCount) {
         do CreateMines(mineCount);
-
+        do CalculateNumbers();
         return;
+    }
+
+    method void CalculateNumbers() {
+        var int x, y;
+        var int count;
+        var Cell cell;
+        let x = 0;
+        while (x < _fieldWidth) {
+            let y = 0;
+            while (y < _fieldHeight) {
+                let cell = _gameField.GetCell(x, y);
+                if (~cell.IsMine()) {
+                    do cell.SetState(CalculateMinesAround(x, y));
+                }
+                let y = y + 1;
+            }
+            let x = x + 1;
+        }
+        return;
+    }
+
+    method int CalculateMinesAround(int x, int y) {
+        var int dx, dy;
+        var int tx, ty;
+        var int count;
+        var Cell cell;
+        let count = 0;
+        let dx = -1;
+        while (dx < 2) {
+            let dy = -1;
+            while (dy < 2) {
+                let tx = x + dx;
+                let ty = y + dy;
+                if ((tx > -1) & (tx < _fieldWidth) &
+                    (ty > -1) & (ty < _fieldHeight)) {
+                    let cell = _gameField.GetCell(tx, ty);
+                    if (cell.IsMine()) {
+                        let count = count + 1;
+                    }
+                }
+                let dy = dy + 1;
+            }
+            let dx = dx + 1;
+        }
+
+        return count;
     }
 
     method void CreateMines(int mineCount) {
