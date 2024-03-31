@@ -1,17 +1,12 @@
 class MessageBox {
-
-    field int _x;
-    field int _y;
     field int _location;
 
-    constructor MessageBox new(int x, int y, int size) {
-        let _x = x;
-        let _y = y;
-        let _location = size;
+    constructor MessageBox new(int x, int y) {
+        let _location = x + (y * 32 * 16);
         return this;
     }
 
-    method void DrawWin(int _location) {
+    method void DrawWin() {
         var int memAddress; 
         let memAddress = 16384+_location;
         // column 0
@@ -95,7 +90,7 @@ class MessageBox {
         return;
     }
 
-    method void DrawLose(int _location) {
+    method void DrawLose() {
         var int memAddress; 
         let memAddress = 16384+_location;
         // column 0

@@ -3,6 +3,7 @@ class Game{
     field int _fieldWidth, _fieldHeight;
     field MessageBox _messageBox;
     field boolean _winOrLose;
+    field int _minesCount;
 
     static int _s_randomSeed;
     static int _s_randomCount;
@@ -11,8 +12,10 @@ class Game{
         let _fieldWidth = 16;
         let _fieldHeight = 16;
         let _gameField = Field.new(_fieldWidth, _fieldHeight);
-        do InitializeField(_fieldHeight * _fieldWidth / 6); // Количество мин
-        let _messageBox = MessageBox.new(1, 1, 10);
+        let _minesCount = _fieldHeight * _fieldWidth / 6;
+        //let _minesCount = 1;
+        do InitializeField(_minesCount); // Количество мин
+        let _messageBox = MessageBox.new(20, 7);
         let _winOrLose = false;
 		return this;
 	}
@@ -30,14 +33,14 @@ class Game{
             while (~(key = 0)) { let key = Keyboard.keyPressed(); }
         }
 
-        if (_winOrLose) { do _messageBox.DrawWin(10); }
-        else { do _messageBox.DrawLose(10); }
+        if (_winOrLose) { do _messageBox.DrawWin(); }
+        else { do _messageBox.DrawLose(); }
         return;
     }
 
     method boolean HandleEvents(int key) {
-        var boolean wasMine;
-        let wasMine = false;
+        var boolean exit;
+        let exit = false;
         // 87 - W вверх
         // 65 - A влево
         // 83 - S вниз
@@ -57,16 +60,16 @@ class Game{
             if (key = 65) { do _gameField.MoveAlongX(-1); }     // left
             if (key = 68) { do _gameField.MoveAlongX(1); }      // right
             if (key = 69) {                                     // nice (проверка мины)
-                let wasMine = ~_gameField.CheckCell();
-                if ((~wasMine) & (_gameField.CheckNumberofOpenCells() = 256)) { 
-                    let _winOrLose = true;
-                    let wasMine = true;
-                }
+                let exit = ~_gameField.CheckCell();
             }
             if (key = 81) { do _gameField.SetOrInstallFlag(); } // устновка/снятие фложка
         }
+        if ((~exit) & (_gameField.CheckNumberofOpenCells() = (_fieldHeight * _fieldWidth - _minesCount))) { 
+            let _winOrLose = true;
+            let exit = true;
+        }
 
-        return wasMine;
+        return exit;
     }
 
     method void InitializeField(int mineCount) {

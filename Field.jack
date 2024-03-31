@@ -136,8 +136,8 @@ class Field{
             let j = 0;
             while (j < _height){
                 let cell = line[j];
-                do cell.SetShow(true);
-                
+                //do cell.SetShow(true);
+
                 do cell.Draw();
                 let j = j + 1;
             }

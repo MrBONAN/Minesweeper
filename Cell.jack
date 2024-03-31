@@ -46,10 +46,9 @@ class Cell {
 			return;
 		}
 		if (~_show) {
-			do DrawEmpty();
+			do DrawClosed();
 			return;
 		}
-
 		if (_state = 0) {
 			do DrawEmpty();
 			return;
@@ -90,10 +89,10 @@ class Cell {
 			do DrawSelected();
 			return;
 		}
-		if (_state = 11) { // closed
-			do DrawClosed();
-			return;
-		}
+		// if (_state = 11) { // closed
+		// 	do DrawClosed();
+		// 	return;
+		// }
 		if (_state = 12) { // mine
 			do DrawMine();
 			return;
@@ -131,7 +130,7 @@ class Cell {
 		if (_flagState) {
 			do DrawFlag();
 		} else {
-			do DrawEmpty();
+			do DrawSelected();
 		}
 		return;
 	}
@@ -163,22 +162,22 @@ class Cell {
 		var int memAddress; 
 		let memAddress = 16384 + GetScreenLocation();
 		// column 0
-		do Memory.poke(memAddress, -1);
-		do Memory.poke(memAddress +32, -15421);
-		do Memory.poke(memAddress +64, -17347);
-		do Memory.poke(memAddress +96, -16387);
-		do Memory.poke(memAddress +128, -16387);
-		do Memory.poke(memAddress +160, -16387);
-		do Memory.poke(memAddress +192, -8197);
-		do Memory.poke(memAddress +224, -8197);
-		do Memory.poke(memAddress +256, -8197);
-		do Memory.poke(memAddress +288, -8197);
-		do Memory.poke(memAddress +320, -16387);
-		do Memory.poke(memAddress +352, -16387);
-		do Memory.poke(memAddress +384, -16387);
-		do Memory.poke(memAddress +416, -17347);
-		do Memory.poke(memAddress +448, -15421);
-		do Memory.poke(memAddress +480, -1);
+		do Memory.poke(memAddress, 6168);
+		do Memory.poke(memAddress +32, 16380);
+		do Memory.poke(memAddress +64, 29646);
+		do Memory.poke(memAddress +96, -6169);
+		do Memory.poke(memAddress +128, -13261);
+		do Memory.poke(memAddress +160, 22554);
+		do Memory.poke(memAddress +192, 28686);
+		do Memory.poke(memAddress +224, 28686);
+		do Memory.poke(memAddress +256, 28686);
+		do Memory.poke(memAddress +288, 28686);
+		do Memory.poke(memAddress +320, 22554);
+		do Memory.poke(memAddress +352, -13261);
+		do Memory.poke(memAddress +384, -14365);
+		do Memory.poke(memAddress +416, 25542);
+		do Memory.poke(memAddress +448, 16380);
+		do Memory.poke(memAddress +480, 6168);
 		return;
 	}
 
