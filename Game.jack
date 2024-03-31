@@ -1,42 +1,69 @@
 class Game{
+    field Field _gameField;
+    field MessageBox _messageBox;
+    field boolean _winOrLose;
 
-    constructor Game new() {
+	constructor Game new() {
+        let _gameField = Field.new();
+        do InitializeField();
+        let _messageBox = MessageBox.new(1, 1, 10);
+        let _winOrLose = false;
 		return this;
 	}
 
-    function void Run() {
-        var Field gameField;
+    method void Run() {
         var boolean exit;
-        var MessageBox messageBox;
-        var boolean winOrLose;
         var char key;
         let exit = false;
-        let gameField = Field.new();
-        let messageBox = MessageBox.new(1, 1, 10);
-        let winOrLose = false;
-        do gameField.Draw();
+        do _gameField.Draw();
 
         while (~exit) {
             while (key = 0) { let key = Keyboard.keyPressed();}
-            if ((129 < key) & (key < 134) | (key = 92) | (key = 128)) {
-                if (key = 131) { do gameField.MoveAlongY(1); }   // up arrow
-                    if (key = 133) { do gameField.MoveAlongY(-1); }    // down arrow
-                    if (key = 130) { do gameField.MoveAlongX(1); }   // left arrow
-                    if (key = 132) { do gameField.MoveAlongX(-1); }   // right arrow
-                    if (key = 128) {
-                        let exit = gameField.CheckCell(); //false - если мина
-                        let exit = ~exit;
-                        if ((~exit) & (gameField.CheckNumberofOpenCells() = 256)) { 
-                            let winOrLose = true;
-                            let exit = true;
-                        }
-                    }
-                    if (key = 92) { do gameField.SetOrInstallFlag(); }
-                }
+            //if (key = 81)  { let exit = true; }     // q key
+            let exit = HandleEvents(key) | exit;
+            while (~(key = 0)) { let key = Keyboard.keyPressed(); }
         }
 
-        if (winOrLose) { do messageBox.DrawWin(10); }
-        else { do messageBox.DrawLose(10); }
+        if (_winOrLose) { do _messageBox.DrawWin(10); }
+        else { do _messageBox.DrawLose(10); }
+        return;
+    }
+
+    method boolean HandleEvents(int key) {
+        var boolean wasMine;
+        let wasMine = false;
+        // 87 - W вверх
+        // 65 - A влево
+        // 83 - S вниз
+        // 68 - D вправо
+        // 69 - E открыть клетку
+        // 81 - Q поставить/убрать флаг с клетки
+        if (
+        (key = 87) |
+        (key = 65) |
+        (key = 83) |
+        (key = 68) |
+        (key = 69) |
+        (key = 81)
+        ) {
+            if (key = 87) { do _gameField.MoveAlongY(-1); }     // up
+            if (key = 83) { do _gameField.MoveAlongY(1); }      // down
+            if (key = 65) { do _gameField.MoveAlongX(-1); }     // left
+            if (key = 68) { do _gameField.MoveAlongX(1); }      // right
+            if (key = 69) {                                     // nice (проверка мины)
+                let wasMine = ~_gameField.CheckCell();
+                if ((~wasMine) & (_gameField.CheckNumberofOpenCells() = 256)) { 
+                    let _winOrLose = true;
+                    let wasMine = true;
+                }
+            }
+            if (key = 81) { do _gameField.SetOrInstallFlag(); } // устновка/снятие фложка
+        }
+
+        return wasMine;
+    }
+
+    method void InitializeField() {
         return;
     }
 }

@@ -85,6 +85,21 @@ class Field{
         return result;
     }
 
+    method void SetCellState(int x, int y, int state) {
+        var Cell cell;
+        var Array line;
+        let line = _gameField[x];
+        let cell = line[y];
+        do cell.SetState(state);
+        return;
+    }
+
+    method int GetCellState(int x, int y) {
+        var Array line;
+        let line = _gameField[x];
+        return line[y];
+    }
+
     method int CheckNumberofOpenCells(){
         return numberOfOpenCells;
     }
