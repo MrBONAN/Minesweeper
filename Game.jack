@@ -1,11 +1,17 @@
 class Game{
     field Field _gameField;
+    field int _fieldWidth, _fieldHeight;
     field MessageBox _messageBox;
     field boolean _winOrLose;
 
+    static int _s_randomSeed;
+    static int _s_randomCount;
+
 	constructor Game new() {
-        let _gameField = Field.new();
-        do InitializeField();
+        let _fieldWidth = 16;
+        let _fieldHeight = 16;
+        let _gameField = Field.new(_fieldWidth, _fieldHeight);
+        do InitializeField(_fieldHeight * _fieldWidth / 6); // Количество мин
         let _messageBox = MessageBox.new(1, 1, 10);
         let _winOrLose = false;
 		return this;
@@ -63,8 +69,42 @@ class Game{
         return wasMine;
     }
 
-    method void InitializeField() {
+    method void InitializeField(int mineCount) {
+        do CreateMines(mineCount);
+
         return;
+    }
+
+    method void CreateMines(int mineCount) {
+        var int x, y;
+        var int currCount;
+        var Cell cell;
+
+        let currCount = 0;
+        while (currCount < mineCount) {
+            let x = Game.Mod(Random.GetRandomNumer(), _fieldWidth);
+            let y = Game.Mod(Random.GetRandomNumer(), _fieldHeight);
+            let cell = _gameField.GetCell(x, y);
+            if (~cell.IsMine()) {
+                do cell.SetMine();
+                let currCount = currCount + 1;
+            }
+        }
+
+        return;
+    }
+
+    function int Mod(int number, int mod) {
+        var int tmp;
+        let tmp = number / mod;
+        if (number < 0) {
+            let tmp = tmp - 1;
+        }
+        let tmp = number - (tmp * mod);
+        if (tmp = mod) {
+            let tmp = 0;
+        }
+        return tmp;
     }
 }
     

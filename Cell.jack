@@ -25,6 +25,15 @@ class Cell {
 		return _state;
 	}
 
+	method boolean IsMine() {
+		return _state = 12;
+	}
+
+	method void SetMine() {
+		let _state = 12;
+		return;
+	}
+
 	method void SetShow(boolean show) {
 		let _show = show;
 		return;

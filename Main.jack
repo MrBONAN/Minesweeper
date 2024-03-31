@@ -1,6 +1,20 @@
 class Main {
     function void main () {
         var Game game;
+        var int tmp;
+        var int i;
+        let i = 0;
+        do Random.SetRandomSeed(4541); // СНАЧАЛА инициализируем рандом
+        // while (i < 100) {
+        //     let tmp = Random.GetRandomNumer();
+        //     //do Output.printInt(Game.Mod(tmp, 16));
+        //     // do Output.printInt(tmp);
+        //     // do Output.printString(" ");
+        //     let i = i + 1;
+        // }
+        // let i = -13;
+        // do Output.printInt(Game.Mod(10, 10));
+        do Random.SetRandomSeed(4541);    // СНАЧАЛА инициализируем рандом
         let game = Game.new();
         do game.Run();
         return;

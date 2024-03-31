@@ -1,0 +1,24 @@
+class Random {
+    static int _s_randomSeed;
+    static int _s_randomCount;
+
+    function void SetRandomSeed(int seed) {
+        let _s_randomSeed = seed;
+        let _s_randomCount = 0; 
+        return;
+    }
+
+    function int GetRandomNumer() {
+        var int tmp;
+        // НЕ линейная функция рандома, как до этого было
+        let _s_randomSeed = Game.Mod(_s_randomSeed * 16 + _s_randomCount, 7) * 3;
+        let _s_randomSeed = _s_randomSeed * 101 + _s_randomCount * 10;
+        let _s_randomSeed = Game.Mod(_s_randomSeed * 997 + _s_randomCount / 37, 100);
+        let _s_randomSeed = _s_randomSeed * 601;
+        let _s_randomCount = _s_randomCount + 1;
+        let tmp = _s_randomSeed;
+        // do Output.printInt(Game.Mod(_s_randomSeed, 16));
+        // do Output.printString(" ");
+        return tmp;
+    }
+}

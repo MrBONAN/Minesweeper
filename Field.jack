@@ -1,12 +1,15 @@
 class Field{
 
     field int _curX, _curY;
+    field int _width, _height;
     field Array _gameField;
     field int numberOfOpenCells;
 
-    constructor Field new() {
+    constructor Field new(int width, int height) {
         let _curX = 0;
 		let _curY = 0;
+        let _width = width;
+        let _height = height;
         let numberOfOpenCells = 0;
         do GenerateField();
 		return this;
@@ -16,13 +19,13 @@ class Field{
         var int i;
         var int j;
         var Array line;
-        let _gameField = Array.new(16);
+        let _gameField = Array.new(_width);
         let i = 0;
-        while (i < 16) {
-            let _gameField[i] = Array.new(16);
+        while (i < _width) {
+            let _gameField[i] = Array.new(_height);
             let line = _gameField[i];
             let j = 0;
-            while (j < 16){
+            while (j < _height){
                 let line[j] = Cell.new(i, j);
                 let j = j + 1;
             }
@@ -55,8 +58,8 @@ class Field{
             if (_curX < 0) {
                 let _curX = 0;
             }
-            if (_curX > 15) {
-                let _curX = 15;
+            if (_curX > (_width - 1)) {
+                let _curX = _width - 1;
             }
         }
         else {
@@ -64,8 +67,8 @@ class Field{
             if (_curY < 0) {
                 let _curY = 0;
             }
-            if (_curY > 15) {
-                let _curY = 15;
+            if (_curY > (_height - 1)) {
+                let _curY = (_height - 1);
             }
         }
         let line = _gameField[_curX];
@@ -96,6 +99,14 @@ class Field{
 
     method int GetCellState(int x, int y) {
         var Array line;
+        var Cell cell;
+        let line = _gameField[x];
+        let cell = line[y];
+        return cell.GetState();
+    }
+
+    method Cell GetCell(int x, int y) {
+        var Array line;
         let line = _gameField[x];
         return line[y];
     }
@@ -120,11 +131,12 @@ class Field{
         var Array line;
         var Cell cell;
         let i = 0;
-        while (i < 16) {
+        while (i < _width) {
             let line = _gameField[i];
             let j = 0;
-            while (j < 16){
+            while (j < _height){
                 let cell = line[j];
+                do cell.SetShow(true);
                 do cell.Draw();
                 let j = j + 1;
             }
