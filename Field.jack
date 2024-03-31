@@ -88,6 +88,20 @@ class Field{
         return result;
     }
 
+    method Cell GetCurrentCell() {
+        var Array line;
+        let line = _gameField[_curX]; 
+        return line[_curY];
+    }
+
+    method int GetCurX() {
+        return _curX;
+    }
+
+    method int GetCurY() {
+        return _curY;
+    }
+
     method void SetCellState(int x, int y, int state) {
         var Cell cell;
         var Array line;

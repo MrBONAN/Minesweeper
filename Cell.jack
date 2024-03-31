@@ -39,6 +39,10 @@ class Cell {
 		return;
 	}
 
+	method boolean GetShow() {
+		return _show;
+	}
+
 	// 0 - пустая, 1..8 - с цифрами, 10 - выбранная, 11 - закрытая, 12 - мина
 	method void Draw() {
 		if (_flagState) {

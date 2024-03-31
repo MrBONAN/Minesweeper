@@ -1,0 +1,33 @@
+class List {
+    field int _value;
+    field List _next;
+    constructor List new() {
+        let _next = null;
+        return this;
+    }
+
+    method void SetValue(int value) {
+        let _value = value;
+        let _next = List.new();
+        return;
+    }
+
+    method boolean Contain(int value) {
+        if (_next = null) { // дошли до хвоста
+            return false;
+        }
+        if (_value = value) {
+            return true;
+        }
+        return _next.Contain(value);
+    }
+
+    method void Add(int value) {
+        if (_next = null) {
+            do SetValue(value);
+        } else {
+            do _next.Add(value);
+        }
+        return;
+    }
+}

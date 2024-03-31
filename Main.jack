@@ -6,7 +6,7 @@ class Main {
         let i = 0;
         do Random.SetRandomSeed(4541); // СНАЧАЛА инициализируем рандом
         // while (i < 100) {
-        //     let tmp = Random.GetRandomNumer();
+        //     let tmp = Random.GetRandomNumber();
         //     //do Output.printInt(Game.Mod(tmp, 16));
         //     // do Output.printInt(tmp);
         //     // do Output.printString(" ");

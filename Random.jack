@@ -8,7 +8,11 @@ class Random {
         return;
     }
 
-    function int GetRandomNumer() {
+    function int GetRandomSeed() {
+        return _s_randomSeed;
+    }
+
+    function int GetRandomNumber() {
         var int tmp;
         // НЕ линейная функция рандома, как до этого было
         let _s_randomSeed = Game.Mod(_s_randomSeed * 16 + _s_randomCount, 7) * 3;

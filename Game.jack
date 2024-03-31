@@ -40,6 +40,7 @@ class Game{
 
     method boolean HandleEvents(int key) {
         var boolean exit;
+        var Cell cell;
         let exit = false;
         // 87 - W вверх
         // 65 - A влево
@@ -60,6 +61,10 @@ class Game{
             if (key = 65) { do _gameField.MoveAlongX(-1); }     // left
             if (key = 68) { do _gameField.MoveAlongX(1); }      // right
             if (key = 69) {                                     // nice (проверка мины)
+                let cell = _gameField.GetCurrentCell();
+                if ((cell.GetState() = 0) & (cell.GetShow() = false)) {
+                    do RevealEmptyCells(_gameField.GetCurX(), _gameField.GetCurY());
+                }
                 let exit = ~_gameField.CheckCell();
             }
             if (key = 81) { do _gameField.SetOrInstallFlag(); } // устновка/снятие фложка
@@ -131,13 +136,42 @@ class Game{
 
         let currCount = 0;
         while (currCount < mineCount) {
-            let x = Game.Mod(Random.GetRandomNumer(), _fieldWidth);
-            let y = Game.Mod(Random.GetRandomNumer(), _fieldHeight);
+            let x = Game.Mod(Random.GetRandomNumber(), _fieldWidth);
+            let y = Game.Mod(Random.GetRandomNumber(), _fieldHeight);
             let cell = _gameField.GetCell(x, y);
             if (~cell.IsMine()) {
                 do cell.SetMine();
                 let currCount = currCount + 1;
             }
+        }
+
+        return;
+    }
+
+    method void RevealEmptyCells(int x, int y) {
+        var int dx, dy;
+        var int tx, ty;
+        var Cell cell;
+        let dx = -1;
+        while (dx < 2) {
+            let dy = -1;
+            while (dy < 2) {
+                let tx = x + dx;
+                let ty = y + dy;
+                if ((tx > -1) & (tx < _fieldWidth) &
+                    (ty > -1) & (ty < _fieldHeight)) {
+                    let cell = _gameField.GetCell(tx, ty);
+                    if (cell.GetState() = 0) { // пустая клетка
+                        if (~(cell.GetShow())) {
+                            do cell.Open();
+                            do RevealEmptyCells(tx, ty);
+                        }
+                    }
+                    do cell.Open();
+                }
+                let dy = dy + 1;
+            }
+            let dx = dx + 1;
         }
 
         return;

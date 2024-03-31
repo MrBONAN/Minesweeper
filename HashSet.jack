@@ -1,0 +1,47 @@
+// Да, я сошёл с ума...
+// В HashSet буду хранить адрес Cell
+
+class HashSet {
+    field Array _set;
+    field int _size;
+    constructor HashSet new(int size) {
+        var int i;
+        let _size = size;
+        let _set = Array.new(size);
+
+        let i = 0;
+        while (i < size) {
+            let _set[i] = List.new();
+            let i = i + 1;
+        }
+
+        return this;
+    }
+
+    method void Add(Cell cell) {
+        var int bucket;
+        var List list;
+        let bucket = GetBucket(cell);
+        let list = _set[bucket];
+        do list.Add(cell);
+        return;
+    }
+
+    method boolean Contain(Cell cell) {
+        var int bucket;
+        var List list;
+        let bucket = GetBucket(cell);
+        let list = _set[bucket];
+        return list.Contain(cell);
+    }
+
+    // мощнейшая функция xD
+    method int GetBucket(int n) {
+        return  Game.Mod(n, _size);
+    }
+
+    method void dispose() {
+        do _set.dispose();
+        return;
+    }
+}
