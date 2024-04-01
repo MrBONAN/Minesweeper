@@ -43,6 +43,10 @@ class Cell {
 		return _show;
 	}
 
+	method boolean IsFlag() {
+		return _flagState;
+	}
+
 	// 0 - пустая, 1..8 - с цифрами, 10 - выбранная, 11 - закрытая, 12 - мина
 	method void Draw() {
 		if (_flagState) {

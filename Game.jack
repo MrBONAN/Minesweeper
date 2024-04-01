@@ -4,6 +4,7 @@ class Game{
     field MessageBox _messageBox;
     field boolean _winOrLose;
     field int _minesCount;
+    field int _flagsCounter;
 
     static int _s_randomSeed;
     static int _s_randomCount;
@@ -13,10 +14,12 @@ class Game{
         let _fieldHeight = 16;
         let _gameField = Field.new(_fieldWidth, _fieldHeight);
         let _minesCount = _fieldHeight * _fieldWidth / 6;
+        let _flagsCounter = 0;
+        do PrintRemainingMines();
 
         do Game.DrawControl();
         do InitializeField(_minesCount); // Количество мин
-        let _messageBox = MessageBox.new(22, 7);
+        let _messageBox = MessageBox.new(22, 10);
         let _winOrLose = false;
 		return this;
 	}
@@ -45,6 +48,8 @@ class Game{
     method boolean HandleEvents(int key) {
         var boolean exit;
         var Cell cell;
+        var int tmp;
+        let tmp = 0;
         let exit = false;
         // 87 - W вверх
         // 65 - A влево
@@ -71,7 +76,17 @@ class Game{
                 }
                 let exit = ~_gameField.CheckCell();
             }
-            if (key = 81) { do _gameField.SetOrInstallFlag(); } // устновка/снятие фложка
+            if (key = 81) {
+                let cell = _gameField.GetCurrentCell();
+                if (cell.IsFlag()) {
+                    let _flagsCounter = _flagsCounter - 1;
+                } else {
+                    let _flagsCounter = _flagsCounter + 1;
+                }
+                do PrintRemainingMines();
+                do _gameField.SetOrInstallFlag();
+
+            } // устновка/снятие фложка
         }
         if ((~exit) & (_gameField.CheckNumberofOpenCells() = (_fieldHeight * _fieldWidth - _minesCount))) { 
             let _winOrLose = true;
@@ -203,7 +218,19 @@ class Game{
         do Output.moveCursor(x+1, y);
         do Output.printString("Open - E");
         do Output.moveCursor(x+2, y);
-        do Output.printString("Set/reset flag - E");
+        do Output.printString("Set/reset flag - Q");
+        return;
+    }
+
+    method void PrintRemainingMines() {
+        var int x, y;
+        let y = 40;
+        let x = 11;
+        do Output.moveCursor(x, y);
+        do Output.printString("                     ");
+        do Output.moveCursor(x, y);
+        do Output.printString("Mines remaining: ");
+        do Output.printInt(_minesCount - _flagsCounter);
         return;
     }
 }
