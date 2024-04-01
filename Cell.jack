@@ -139,7 +139,7 @@ class Cell {
 		return;
 	}
 
-	method void DrawSelected() {
+	method void DrawClosed() {
 		var int memAddress; 
 		let memAddress = 16384 + GetScreenLocation();
 		// column 0
@@ -162,26 +162,26 @@ class Cell {
 		return;
 	}
 
-	method void DrawClosed() {
+	method void DrawSelected() {
 		var int memAddress; 
 		let memAddress = 16384 + GetScreenLocation();
 		// column 0
-		do Memory.poke(memAddress, 6168);
-		do Memory.poke(memAddress +32, 16380);
-		do Memory.poke(memAddress +64, 29646);
-		do Memory.poke(memAddress +96, -6169);
-		do Memory.poke(memAddress +128, -13261);
-		do Memory.poke(memAddress +160, 22554);
-		do Memory.poke(memAddress +192, 28686);
-		do Memory.poke(memAddress +224, 28686);
-		do Memory.poke(memAddress +256, 28686);
-		do Memory.poke(memAddress +288, 28686);
-		do Memory.poke(memAddress +320, 22554);
-		do Memory.poke(memAddress +352, -13261);
-		do Memory.poke(memAddress +384, -14365);
-		do Memory.poke(memAddress +416, 25542);
-		do Memory.poke(memAddress +448, 16380);
-		do Memory.poke(memAddress +480, 6168);
+		do Memory.poke(memAddress, -1);
+		do Memory.poke(memAddress +32, -15325);
+		do Memory.poke(memAddress +64, -21547);
+		do Memory.poke(memAddress +96, -28279);
+		do Memory.poke(memAddress +128, -22123);
+		do Memory.poke(memAddress +160, -14749);
+		do Memory.poke(memAddress +192, -22939);
+		do Memory.poke(memAddress +224, -18019);
+		do Memory.poke(memAddress +256, -18019);
+		do Memory.poke(memAddress +288, -22939);
+		do Memory.poke(memAddress +320, -14749);
+		do Memory.poke(memAddress +352, -22123);
+		do Memory.poke(memAddress +384, -28279);
+		do Memory.poke(memAddress +416, -21547);
+		do Memory.poke(memAddress +448, -15325);
+		do Memory.poke(memAddress +480, -1);
 		return;
 	}
 
