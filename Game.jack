@@ -49,6 +49,7 @@ class Game{
         var boolean exit;
         var Cell cell;
         var int tmp;
+        var booleand tmpb;
         let tmp = 0;
         let exit = false;
         // 87 - W вверх
@@ -78,13 +79,16 @@ class Game{
             }
             if (key = 81) {
                 let cell = _gameField.GetCurrentCell();
-                if (cell.IsFlag()) {
-                    let _flagsCounter = _flagsCounter - 1;
-                } else {
-                    let _flagsCounter = _flagsCounter + 1;
-                }
-                do PrintRemainingMines();
+                let tmpb = cell.IsFlag();
                 do _gameField.SetOrInstallFlag();
+                if (~(tmpb = cell.IsFlag())) {
+                    if (~tmpb) {
+                        let _flagsCounter = _flagsCounter + 1;
+                    } else {
+                        let _flagsCounter = _flagsCounter - 1;
+                    }
+                    do PrintRemainingMines();
+                }
 
             } // устновка/снятие фложка
         }
