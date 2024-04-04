@@ -1,0 +1,51 @@
+function Random.SetRandomSeed 0
+push argument 0
+pop static 0
+push constant 0
+pop static 1
+push constant 0
+return
+function Random.GetRandomSeed 0
+push static 0
+return
+function Random.GetRandomNumber 1
+push static 0
+push constant 16
+call Math.multiply 2
+push static 1
+add
+push constant 7
+call Game.Mod 2
+push constant 3
+call Math.multiply 2
+pop static 0
+push static 0
+push constant 101
+call Math.multiply 2
+push static 1
+add
+push constant 10
+call Math.multiply 2
+pop static 0
+push static 0
+push constant 997
+call Math.multiply 2
+push static 1
+add
+push constant 37
+call Math.divide 2
+push constant 100
+call Game.Mod 2
+pop static 0
+push static 0
+push constant 601
+call Math.multiply 2
+pop static 0
+push static 1
+push constant 1
+add
+pop static 1
+push static 0
+pop local 0
+push local 0
+return

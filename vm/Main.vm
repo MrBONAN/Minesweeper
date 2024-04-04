@@ -1,0 +1,16 @@
+function Main.main 3
+push constant 0
+pop local 2
+push constant 4541
+call Random.SetRandomSeed 1
+pop temp 0
+push constant 4541
+call Random.SetRandomSeed 1
+pop temp 0
+call Game.new 0
+pop local 0
+push local 0
+call Game.Run 1
+pop temp 0
+push constant 0
+return

@@ -1,0 +1,84 @@
+function HashSet.new 1
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 1
+push argument 0
+call Array.new 1
+pop this 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push argument 0
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 0
+add
+call List.new 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+return
+function HashSet.Add 2
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+call HashSet.GetBucket 2
+pop local 0
+push local 0
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+push argument 1
+call List.Add 2
+pop temp 0
+push constant 0
+return
+function HashSet.Contain 2
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+call HashSet.GetBucket 2
+pop local 0
+push local 0
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+push argument 1
+call List.Contain 2
+return
+function HashSet.GetBucket 0
+push argument 0
+pop pointer 0
+push argument 1
+push this 1
+call Game.Mod 2
+return
+function HashSet.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
